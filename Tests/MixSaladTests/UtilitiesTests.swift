@@ -9,7 +9,7 @@ import XCTest
 import Combine
 @testable import MixSalad
 
-final class UtilitiesTestCase: XCTestCase{
+final class UtilitiesTestCase: XCTestCase {
     
     struct User:Codable {
         var name:String
