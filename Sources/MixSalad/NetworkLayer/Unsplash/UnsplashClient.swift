@@ -10,6 +10,9 @@ import Combine
 
 enum UnsplashEndpoit {
     case listPhotos(page:Int, per_page:Int, order_by:String?)
+    case getAPhoto(id:String)
+    case getARandomPhoto
+    case getAPhotoStatistics(id:String, quantity: Int)
 }
 extension UnsplashEndpoit: EndPointType {
     var environmentBaseURL: String {
@@ -33,13 +36,22 @@ extension UnsplashEndpoit: EndPointType {
         switch self {
         case .listPhotos(_, _, _):
             return "photos"
-        
+        case .getAPhoto(let id):
+            return "photos/\(id)"
+        case .getARandomPhoto:
+            return "photos/random"
+        case .getAPhotoStatistics(let id, _):
+            return "photos/\(id)/statistics"
         }
     }
     
     var httpMethod: HttpMethod {
         switch self {
-        case .listPhotos(_, _, _):
+        case .listPhotos(_, _, _),
+             .getAPhoto(_),
+             .getARandomPhoto,
+             .getAPhotoStatistics(_ , _):
+            
             return .get
         }
     }
@@ -56,14 +68,26 @@ extension UnsplashEndpoit: EndPointType {
             return .requestParameters(bodyParameters: nil,
                                       bodyEncoding: .urlEncoding,
                                       urlParameters: urlParams)
+        case .getAPhoto(_):
+            let urlParams:Parameters = ["client_id":UnsplashClient.UnsplashAPIKey]
+            return .requestParameters(bodyParameters: nil,
+                                      bodyEncoding: .urlEncoding,
+                                      urlParameters: urlParams)
+        case .getARandomPhoto:
+            return .request
+        case .getAPhotoStatistics(let id, let quantity):
+            var urlParams:Parameters = ["id":id]
+            urlParams["quantity"] = quantity
+            urlParams["client_id"] = UnsplashClient.UnsplashAPIKey
+            return .requestParameters(bodyParameters: nil,
+                                      bodyEncoding: .urlEncoding,
+                                      urlParameters: urlParams)
         }
     }
     
     var headers: HttpHeaders? {
         return ["Authorization":"Client-ID \(UnsplashClient.UnsplashAPIKey)"]
     }
-    
-    
 }
 
 class UnsplashClient: UnsplashProtocol {
@@ -74,16 +98,44 @@ class UnsplashClient: UnsplashProtocol {
     
     func listPhotos(page: Int,
                     perPage:Int,
-                    orderBy: UnsplashOrderBy) -> AnyPublisher<[UnsplashPhoto]?, UnsplashError> {
+                    orderBy: UnsplashOrderBy?) -> AnyPublisher<[UnsplashPhoto]?, UnsplashError> {
         router.request(.listPhotos(page: page,
                                    per_page: 10,
-                                   order_by: orderBy.rawValue))
+                                   order_by: orderBy?.rawValue))
             .mapError({ (error) -> UnsplashError in
-                return UnsplashError.unknow
+                return UnsplashError.unknown
             })
             .map { (data) in
                 let photos = try? JSONDecoder().decode([UnsplashPhoto].self, from: data)
                 return photos
             }.eraseToAnyPublisher()
+    }
+    
+    func getAPhoto(id: String) -> AnyPublisher<UnsplashPhoto, UnsplashError> {
+        router.request(.getAPhoto(id: id))
+            .mapError ({ (error) -> UnsplashError in
+                return UnsplashError.unknown
+            })
+            .map { data in
+                let photo = try? JSONDecoder().decode(UnsplashPhoto.self, from: data)
+                return photo!
+            }.eraseToAnyPublisher()
+    }
+    
+    func getARandomPhoto() -> AnyPublisher<UnsplashPhoto, UnsplashError>{
+        router.request(.getARandomPhoto)
+            .mapError { (error) -> UnsplashError in
+                return UnsplashError.unknown
+            }
+            .map { data in
+                let photo = try? JSONDecoder().decode(UnsplashPhoto.self, from: data)
+                return photo!
+            }.eraseToAnyPublisher()
+    }
+    
+    func getAPhotoStatistics(id: Int,
+                             resolution: String? = "days",
+                             quantity: Int?) {
+        
     }
 }

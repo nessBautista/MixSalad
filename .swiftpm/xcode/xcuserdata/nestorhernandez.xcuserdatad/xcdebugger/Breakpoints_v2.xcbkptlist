@@ -7,32 +7,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "27EAD51E-7C5F-4D23-A87B-F3E4C39CCCD6"
+            uuid = "EFD41EFB-1415-4850-BAA0-6D24F5E3D10D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Sources/MixSalad/NetworkLayer/NetworkRouter.swift"
+            filePath = "Tests/MixSaladTests/NetworkLayerTests.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "request(_:)"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "testUnsplashGetPhoto()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "21ECDF61-CC6B-44C0-B03E-83B3CC268953"
+            uuid = "40296D61-78D9-4C44-89C8-008E1C33C0CD"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Sources/MixSalad/NetworkLayer/NetworkRouter.swift"
+            filePath = "Tests/MixSaladTests/NetworkLayerTests.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
-            landmarkName = "request(_:)"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "testUnsplashGetPhoto()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "37492B55-8CDA-4581-846E-228D23245275"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Sources/MixSalad/NetworkLayer/Unsplash/UnsplashClient.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "getAPhoto(id:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

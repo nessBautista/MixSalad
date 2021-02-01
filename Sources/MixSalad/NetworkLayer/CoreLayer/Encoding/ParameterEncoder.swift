@@ -8,11 +8,11 @@
 import Foundation
 public typealias Parameters = [String:Any]
 
-public enum NetworkError: String, Error {
-    case parametersNil = "parameters were nil."
-    case encodingFailed = "Parameter encoding failed."
-    case missingURL = "URL is nil"
-    case unknown =  "unknown"
+public enum NetworkError: Error {
+    case parametersNil
+    case encodingFailed
+    case missingURL
+    case unknown
 }
 public enum NetworkEnvironment {
     case qa
